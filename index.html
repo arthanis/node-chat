@@ -2,40 +2,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Node chat</title>
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
 <main class="main">
     <div class="container">
         <h1 class="my-5">Node chat</h1>
 
-        <div class="chat">
+        <form class="chat">
             <div class="form-group">
-                <div class="chat__messages"></div>
+                <div id="messages" class="bg-light border rounded p-3" style="height: 200px; overflow: auto;"></div>
             </div>
 
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Type your name..">
+                <input type="text" id="name" class="form-control" maxlength="10" placeholder="Type your name..">
             </div>
 
             <div class="form-group">
-                <textarea rows="3" class="form-control" placeholder="Type your message.."></textarea>
-            </div>
-
-            <div class="form-group">
-                <div class="chat__status">Idle</div>
+                <textarea rows="3" id="message" class="form-control" placeholder="Type your message.."></textarea>
             </div>
 
             <div class="form-group">
                 <button class="btn btn-primary btn-block">Submit</button>
             </div>
-        </div>
+        </form>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        $(() => {
+          const socket = io();
+          const $name = $('#name');
+          const $message = $('#message');
+
+          $('form').on('submit', (e) => {
+            e.preventDefault();
+
+            socket.emit('chat message', {
+              name: $name.val(),
+              message: $message.val()
+            });
+
+            $name.val('');
+            $message.val('');
+
+            return false;
+          });
+
+          socket.on('chat message', (data) => {
+            const date = new Date();
+            const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+            $('#messages').append(`<div class="mb-2"><i style="color: #aaa">${time}</i> <b>${data.name} </b> <span>${data.message}</span></div>`);
+          });
+        });
+    </script>
 </main>
 </body>
 </html>

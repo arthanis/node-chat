@@ -1,3 +1,3 @@
 # Node chat
 
-Based on a Udemy tutorial
+Based on tutorial

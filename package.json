@@ -1,0 +1,24 @@
+{
+  "name": "node-chat",
+  "version": "1.0.0",
+  "description": "Based on a Udemy tutorial",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arthanis/node-chat.git"
+  },
+  "keywords": [],
+  "author": "arthanis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arthanis/node-chat/issues"
+  },
+  "homepage": "https://github.com/arthanis/node-chat#readme",
+  "dependencies": {
+    "express": "^4.17.0",
+    "jquery": "^3.4.1",
+    "mongodb": "^3.2.5",
+    "socket.io": "^2.2.0"
+  }
+}
